@@ -12,12 +12,14 @@ from models.country import Country
 from models.review import Review
 from models.state import State
 from models.user import User
-# from os import getenv
+from models.item import Item
+from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Country": Country, "City": City,
-          "Category": Category,  "Review": Review, "State": State, "User": User}
+           "Category": Category,  "Review": Review,
+           "State": State, "User": User, "Item": Item}
 
 
 class DBStorage:
@@ -27,16 +29,15 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-        MYSQL_USER = getenv('MYSQL_USER')
-        MYSQL_PWD = getenv('MYSQL_PWD')
-        MYSQL_HOST = getenv('MYSQL_HOST')
-        MYSQL_DB = getenv('MYSQL_DB')
-        
-        
+
+        XLEASE_MYSQL_USER = getenv('XLEASE_MYSQL_USER')
+        XLEASE_MYSQL_PWD = getenv('XLEASE_MYSQL_PWD')
+        XLEASE_MYSQL_HOST = getenv('XLEASE_MYSQL_HOST')
+        XLEASE_MYSQL_DB = getenv('XLEASE_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(MYSQL_USER, MYSQL_PWD,
-                                      MYSQL_HOST,
-                                      MYSQL_DB)
+                                      .format(XLEASE_MYSQL_USER, XLEASE_MYSQL_PWD,
+                                      XLEASE_MYSQL_HOST,
+                                      XLEASE_MYSQL_DB)
                                       )
 
     def all(self, cls=None):

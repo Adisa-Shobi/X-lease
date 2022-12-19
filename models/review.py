@@ -7,7 +7,14 @@ from sqlalchemy import Column, String, ForeignKey
 
 
 class Review(BaseModel, Base):
-    """Representation of Review """
+    """
+    Database mapping of the reviews table
+
+    Properties:
+        item_id: Foreign key referencing the item described by current review
+        user_id: Foreign key referencing current reviews author
+        text: The review content
+    """
     __tablename__ = 'reviews'
     item_id = Column(String(60), ForeignKey('items.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
