@@ -21,6 +21,6 @@ class City(BaseModel, Base):
     '''
     __tablename__ = 'cities'
     name = Column(String(50), nullable=False)
-    state_id = Column(String(60), ForeignKey('states.id'))
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     longitude = Column(Float(), nullable=True)
     latitude = Column(Float(), nullable=True)
