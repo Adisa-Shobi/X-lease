@@ -12,6 +12,10 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+@app_views.route('/', methods=['GET'], strict_slashes=False)
+def root():
+    """ API root """
+    return jsonify({"APIs": ["All available API links will be listed here"]})
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():

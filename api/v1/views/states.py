@@ -23,6 +23,9 @@ def get_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
+    state_cities = [i.to_dict() for i in state.cities]
+    state_obj = state.to_dict()
+    state_obj["cities"] = state_cities
     return jsonify(state.to_dict())
 
 
