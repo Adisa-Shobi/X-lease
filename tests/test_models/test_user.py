@@ -104,7 +104,7 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(user_dict, dict)
         self.assertFalse('_sa_instance_state' in user_dict)
         for key in user.__dict__.keys():
-            if key is not '_sa_instance_state':
+            if key != '_sa_instance_state':
                 self.assertTrue(key in user_dict)
         self.assertTrue('__class__' in user_dict)
 

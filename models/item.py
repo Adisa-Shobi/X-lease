@@ -6,6 +6,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy import Column, Float, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
 
 
 class Item(BaseModel, Base):
@@ -31,4 +32,8 @@ class Item(BaseModel, Base):
     description = Column(Text(225), nullable=False)
     category_id = Column(String(60), ForeignKey('categories.id'))
     owner_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-    client_id = Column(String(60), ForeignKey('users.id'), nullable=True)
+    leaser_id = Column(String(60), ForeignKey('users.id'), nullable=True,
+                       default=None)
+    owner = relationship('User', foreign_keys='Item.owner_id', backref='items')
+    leaser = relationship('User', foreign_keys='Item.leaser_id',
+                          backref='leased')

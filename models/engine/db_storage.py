@@ -30,16 +30,15 @@ class DBStorage:
     def __init__(self):
         """Instantiate a DBStorage object"""
 
-    XLEASE_MYSQL_USER = getenv('XLEASE_MYSQL_USER')
-    XLEASE_MYSQL_PWD = getenv('XLEASE_MYSQL_PWD')
-    XLEASE_MYSQL_HOST = getenv('XLEASE_MYSQL_HOST')
-    XLEASE_MYSQL_DB = getenv('XLEASE_MYSQL_DB')
-    
-    self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                    .format(XLEASE_MYSQL_USER, XLEASE_MYSQL_PWD,
-                                    XLEASE_MYSQL_HOST,
-                                    XLEASE_MYSQL_DB)
-                                    )
+        XLEASE_MYSQL_USER = getenv('XLEASE_MYSQL_USER')
+        XLEASE_MYSQL_PWD = getenv('XLEASE_MYSQL_PWD')
+        XLEASE_MYSQL_HOST = getenv('XLEASE_MYSQL_HOST')
+        XLEASE_MYSQL_DB = getenv('XLEASE_MYSQL_DB')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                                      .format(XLEASE_MYSQL_USER,
+                                              XLEASE_MYSQL_PWD,
+                                              XLEASE_MYSQL_HOST,
+                                              XLEASE_MYSQL_DB))
 
     def all(self, cls=None):
         """query on the current database session"""
