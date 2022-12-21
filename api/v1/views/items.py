@@ -1,127 +1,167 @@
 #!/usr/bin/python3
-""" Api that handles all default RestFul API actions for Items"""
+'''
+Endpoints defined for all item retrievals
+'''
+from api.v1.views import app_views
+from models import storage
+from flask import abort, jsonify, make_response, request
 from models.item import Item
 from models.category import Category
-from models import storage
-from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from models.user import User
 
 
-@app_views.route('/items', methods=['GET'], strict_slashes=False)
+@app_views.route('/items', methods=['GET', 'POST'], strict_slashes=False)
 def get_items():
-    """
-    Retrieves a list of all amenities
-    """
-    all_items= storage.all(Item).values()
-    list_items= []
-    for item in all_items:
-        list_items.append(item.to_dict())
-    return make_response(jsonify(list_items), 200)
+    '''
+    Retrieves all items
+    '''
+    if request.method == 'POST':
+        data = requests.get_json()
+        if not data:
+            abort(404, description='Invalid JSON')
+        data_keys = data.keys()
+        compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
+                           'description', 'category_id', 'owner_id']
+        if not set(compulsory_data).issubset(set(data_keys)):
+            abort(404, description='insufficient data supplied')
+        new_item = Item(**data)
+        new_item.save()
+        return make_response(jsonify(new_item.to_dict()), 201)
+    else:
+        items = storage.all(Item)
+        if not items:
+            abort(404, description='there are currently no available items')
+        item_list = list(map(lambda x: x.to_dict(), items.values()))
+        return jsonify(item_list)
 
 
-@app_views.route('/items/<item_id>/', methods=['GET'],
+@app_views.route('items/<item_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def get_item(item_id):
-    """ Retrieves an item """
+def get_item(item_id=None):
+    '''
+    Retrieves item specified by item_id
+    '''
     item = storage.get(Item, item_id)
     if not item:
-        abort(404)
-    return make_response(jsonify(item.to_dict()), 200)
+        abort(404, description='item_id does not exist')
+
+    if request.method == 'PUT':
+        read_only = ['id', 'created_at', 'updated_at']
+        data = request.get_json()
+        if not data:
+            abort(404, description='Invalid JSON')
+        for info in data:
+            if info not in read_only:
+                setattr(item, info, data[info])
+                print(data[info])
+        item.save()
+        return make_response(jsonify(item.to_dict()), 200)
+    elif request.method == 'DELETE':
+        storage.delete(item)
+        storage.save()
+        return make_response(jsonify({}), 201)
+    else:
+        return jsonify(item.to_dict())
 
 
-@app_views.route('/items/<item_id>', methods=['DELETE'],
+@app_views.route('/categories/<category_id>/items',
+                 methods=['GET', 'POST'],
                  strict_slashes=False)
-def delete_item(item_id):
-    """
-    Deletes an item  Object
-    """
-    item = storage.get(Item, item_id)
-    if not item:
-        abort(404)
-    storage.delete(item)
-    storage.save()
-    return make_response(jsonify({}), 200)
+def get_items_by_category(category_id=None):
+    '''
+    Retrieves all items under specified category
+    '''
+    if request.method == 'POST':
+        data = request.get_json()
+        if not data:
+            abort(404, description='Invalid JSON')
+        data['category_id'] = category_id
+        data_keys = data.keys()
+        compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
+                           'description', 'category_id', 'owner_id']
+        if not set(compulsory_data).issubset(set(data_keys)):
+            abort(404, description='insufficient data supplied')
+        new_item = Item(**data)
+        new_item.save()
+        return make_response(jsonify(new_item.to_dict()), 201)
+    else:
+        category = storage.get(Category, category_id)
+        if not category:
+            abort(404, description='category_id does not exist')
+        category_items = category.items
+        items_dict = list(map(lambda x: x.to_dict(), category_items))
+        return jsonify(items_dict)
 
 
-@app_views.route('/items', methods=['POST'], strict_slashes=False)
-def post_item():
-    """
-    Creates an item
-    """
-    if not request.get_json():
-        abort(400, description="Not a JSON")
-
-    if 'name' not in request.get_json():
-        abort(400, description="Missing name")
-    if 'category_id' not in request.get_json():
-        abort(400, description="Missing category id")
-    if 'owner_id' not in request.get_json():
-        abort(400, description="Missing owner id")
-    data = request.get_json()
-    instance = item(**data)
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
-
-
-@app_views.route('/items/<item_id>', methods=['PUT'],
+@app_views.route('/categories/<category_id>/items/<item_id>',
+                 methods=['GET'],
                  strict_slashes=False)
-def put_item(item_id):
-    """
-    Updates an item
-    """
-    if not request.get_json():
-        abort(400, description="Not a JSON")
-    ignore = ['id', 'created_at', 'updated_at']
-    item = storage.get(Item, item_id)
-    if not item:
-        abort(404)
-    data = request.get_json()
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(Item, key, value)
-    storage.save()
-    return make_response(jsonify(item.to_dict()), 201)
-
-
-@app_views.route('/categories/<category_id>/items', methods=['POST'], strict_slashes=False)
-def post_category_item():
-    """ Creates a categorys item """
-    if not request.get_json():
-        abort(400, description="Not a JSON")
-    category = storage.get(Category, category_id)
-    if 'name' not in request.get_json():
-        abort(400, description="Missing item name")
-    if 'owner_id' not in request.get_json():
-        abort(400, description="Missing owner id")
-    data = request.get_json()
-    instance = Item(**data)
-    instance.category_id = category.id
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
-
-
-@app_views.route('/categories/<category_id>/items', methods=['GET'],
-                 strict_slashes=False)
-def get_category_items(category_id):
-    """
-    Retrieves the list of all items objects
-    of a specific category
-    """
+def get_item_by_category(category_id=None, item_id=None):
+    '''
+    Retrieves specified item under specified category
+    '''
     category = storage.get(Category, category_id)
     if not category:
-        abort(404)
-    list_items = [item.to_dict() for item in category.items]
-    return jsonify(list_items)
+        abort(404,
+              description='category_id does not exist')
+    category_items = category.items
+    for item in category_items:
+        if item.id == item_id:
+            matched_item = item
+    if not matched_item:
+        abort(404,
+              description='item_id does not exist under specified category')
+    return jsonify(matched_item.to_dict())
 
-@app_views.route('/users/<user_id>/items', methods=['GET'],
+
+@app_views.route('/users/<user_id>/items',
+                 methods=['GET', 'POST'],
                  strict_slashes=False)
-def get_user_items(category_id):
-    """
-    Retrieves the list of all items objects
-    of a specific user
-    """
+def get_user_items(user_id):
+    '''
+    Retrieves items for specified user_id
+    '''
+    if request.method == 'POST':
+        data = request.get_json()
+        if not data:
+            abort(404, description='Invalid JSON')
+        data['user_id'] = user_id
+        data_keys = data.keys()
+        compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
+                           'description', 'category_id', 'owner_id']
+        if not set(compulsory_data).issubset(set(data_keys)):
+            abort(404, description='insufficient data supplied')
+        new_item = Item(**data)
+        new_item.save()
+        return make_response(jsonify(new_item.to_dict()), 201)
+    else:
+        user = storage.get(User, user_id)
+        if not user:
+            abort(404, description='user_id does not exist')
+        user_items = user.items
+        if not user_items:
+            abort(404, 'Specified user owns no items')
+        items_dict = list(map(lambda x: x.to_dict(), user_items))
+        return jsonify(items_dict)
+
+
+@app_views.route('/users/<user_id>/items/<item_id>',
+                 methods=['GET'],
+                 strict_slashes=False)
+def get_user_item(user_id, item_id):
+    '''
+    Retrieves specified item for specified user_id
+    '''
     user = storage.get(User, user_id)
-    if not category:
-        abort(404)
-    list_items = [item.to_dict() for item in user.items]
-    return jsonify(list_items)
+    if not user:
+        abort(404, description='user_id does not exist')
+    user_items = user.items
+    if not user_items:
+        abort(404, 'Specified user owns no items')
+    for item in user_items:
+        if item.id == item_id:
+            matched_item = item
+            break
+    if not matched_item:
+        abort(404, description='item_id does not exist')
+    return jsonify(matched_item.to_dict())
