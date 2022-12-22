@@ -39,7 +39,6 @@ class DBStorage:
                                               XLEASE_MYSQL_PWD,
                                               XLEASE_MYSQL_HOST,
                                               XLEASE_MYSQL_DB))
-
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}

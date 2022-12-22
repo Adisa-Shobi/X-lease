@@ -21,7 +21,10 @@ def get_country(country_id):
     country = storage.get(Country, country_id)
     if not country:
         abort(404)
-    return jsonify(country.to_dict())
+    country_states = [i.to_dict() for i in country.states]
+    country_obj = country.to_dict()
+    country_obj["states"] = country_states
+    return jsonify(country_obj)
 
 @app_views.route('/countries/<country_id>', methods=['DELETE'],
                  strict_slashes=False)

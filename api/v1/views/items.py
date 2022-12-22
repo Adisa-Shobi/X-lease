@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Endpoints defined fpr all item retrievals
+Endpoints defined for all item retrievals
 '''
 from api.v1.views import app_views
 from models import storage
