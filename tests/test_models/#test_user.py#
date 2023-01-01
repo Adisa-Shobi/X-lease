@@ -4,6 +4,7 @@ Test classes for the User class
 '''
 
 import unittest
+
 from models import user
 from models.base_model import BaseModel
 import inspect

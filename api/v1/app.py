@@ -25,7 +25,7 @@ def not_found(error):
     404 Error
     description: A resource was not found
     """
-    return make_response(jsonify({'Error': "Resource Not Found"}), 404)
+    return jsonify(error=str(error)), 404
 
 if __name__ == "__main__":
     host = environ.get('API_HOST')
