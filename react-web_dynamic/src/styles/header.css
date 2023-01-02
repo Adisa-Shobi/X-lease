@@ -109,7 +109,7 @@ body {
     padding: 0px 15px;
   }
   
-  /* Styling for input field of search bar */
+  /* Styling for input field  of search bar */
   .search input:focus {
     outline: none; /* Deleted focus outline of input field */
   }
