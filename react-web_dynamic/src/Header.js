@@ -1,11 +1,12 @@
+import { Link } from 'react-router-dom';
 import './images/xlease-logo4.png';
 
 const Header = () => {
     return ( 
         <header>
-            <a href="#">
+            <Link to="/">
                 <img src="./logo.png" alt="" className="logo" />
-            </a>
+            </Link>
             <div className="search">
                 <button className="search-button">
                     <div className="search-logo"></div>
@@ -14,7 +15,7 @@ const Header = () => {
                 <input type="text" className="search-field" />
             </div>
             <div className="links">
-                <a href="#" className="lease-button">Lease your device</a>
+                <Link to="/lease-my-device" className="lease-button">Lease your device</Link>
                 <button className="profile"></button>
             </div>
         </header>

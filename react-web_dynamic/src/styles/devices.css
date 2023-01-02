@@ -9,9 +9,10 @@
 }
 
 /* Styling for seaction heading "devices" */
-.container h2 {
+.devices-header {
     font-family: 'Roboto', sans-serif;
     width: 100%;
+    margin-left: 40px;
 }
 
 /* Styling for each device article */
