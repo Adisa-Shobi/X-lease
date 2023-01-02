@@ -11,10 +11,10 @@ const CategoryBar = () => {
             {categories && categories.map((category) => {
                 return (
                     <Link to={ `categories/${category.id}` } key={ category.id }>
-                    <button className="category" >
-                        <div className="icon"></div>
-                        <p className="tag">{ category.name }</p>
-                    </button>
+                        <button className="category" >
+                            <div className="icon"></div>
+                            <p className="tag">{ category.name }</p>
+                        </button>
                     </Link>)  
                 }
             )}

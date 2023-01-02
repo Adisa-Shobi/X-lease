@@ -14,7 +14,7 @@ const Footer = () => {
                 </Link>
             </div>
             <div className="quick-links">
-                    <a href="https://github.com/Adisa-Shobi/X-lease" target="_blank">GitHub</a>
+                    <a href="https://github.com/Adisa-Shobi/X-lease" target="_blank" rel="noreferrer">GitHub</a>
                     <div className="divider"></div>
                     <Link to="/">Blog</Link>
             </div>
