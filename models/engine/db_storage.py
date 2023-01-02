@@ -29,7 +29,8 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-
+        
+        
         XLEASE_MYSQL_USER = getenv('XLEASE_MYSQL_USER')
         XLEASE_MYSQL_PWD = getenv('XLEASE_MYSQL_PWD')
         XLEASE_MYSQL_HOST = getenv('XLEASE_MYSQL_HOST')
