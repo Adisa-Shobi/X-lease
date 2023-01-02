@@ -18,7 +18,7 @@ const Header = () => {
                 <Link to="lease-my-device/" className="lease-button">Lease your device</Link>
                 <Link to="lease-my-device/" className="lease-button">Signin</Link>
                 <Link to="lease-my-device/" className="lease-button">Signup</Link>
-                <button className="profile"></button>
+                {/* <button className="profile"></button> */}
             </div>
         </header>
      );

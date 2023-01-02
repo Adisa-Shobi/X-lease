@@ -25,7 +25,7 @@ const Devices = () => {
                                     </h4>
                                 </div>
                                 <h5 className="description">{ item.description.slice(0,80) }...</h5>
-                                <p className="categoty-tag">{ item.category }</p>
+                                <p className="category-tag">{ item.category }</p>
                                 <Link to={ `lease-a-device/${ item.id }` }>
                                     <button className="lease-device">Lease</button>
                                 </Link>
