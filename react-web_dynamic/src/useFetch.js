@@ -19,7 +19,9 @@ const useFetch = (url) => {
             }).catch(err => {
                 if( err.name !== 'AbortError'){
                     console.log(err.message);
+                    setLoading(false);
                     setError(err.message);
+                    
                 }
             })
             return () => abortCont.abort();
