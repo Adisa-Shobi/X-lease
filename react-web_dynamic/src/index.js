@@ -5,6 +5,7 @@ import './styles/header.css'
 import './styles/footer.css'
 import './styles/category.css'
 import './styles/devices.css'
+import './styles/leaseMyDevice.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
