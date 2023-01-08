@@ -29,7 +29,7 @@ def store_image(image):
         'imagedata': open("{}".format(img), 'rb')
     }
     payload = {
-        'access_token': 'byh7UVyssHhtbo0niATY8ccSceUdYXxncagn2gEjpO4',
+        'access_token': os.getenv['ACCESS_TOKEN'],
         'title': img
     }
     response = requests.post(url,
