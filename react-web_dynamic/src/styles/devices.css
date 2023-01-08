@@ -9,16 +9,17 @@
 }
 
 /* Styling for seaction heading "devices" */
-.container h2 {
+.devices-header {
     font-family: 'Roboto', sans-serif;
     width: 100%;
+    margin-left: 40px;
 }
 
 /* Styling for each device article */
 .container {
     width: 250px;
     height: fit-content;
-    background-color: rgb(235, 245, 242);
+    background-color:#E4E2E1;
     border-radius: 15px;
     padding: 20px;
     margin: 20px;
@@ -93,4 +94,11 @@ img {
     color: white;
     width: 70px;   
     font-family: 'Roboto', sans-serif; 
+}
+/* Styling for category tag text */
+.category-tag {
+    color: gray;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
 }

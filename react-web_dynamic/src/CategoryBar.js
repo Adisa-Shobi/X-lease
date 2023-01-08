@@ -1,18 +1,23 @@
+import useFetch from "./useFetch";
+import { Link } from "react-router-dom";
+
 
 const CategoryBar = () => {
-    let categories = ['Gaming', 'Filming', 'Recording', 'Mobile', 'Computer', 'Audio', 'Wearables', 'Fitness', 'PA systems']
-
-    const categoryName = "b"
+    const url = "http://127.0.0.1:8000/xlease/categories"
+    const {data:categories, error} = useFetch(url)
     return ( 
         <div id="categories">
-            {categories.map((category) => (
-                <button className="category" key={ category }>
-                    <div className="icon"></div>
-                    <p className="tag">{ category }</p>
-                </button>
-            ))}
-            
-
+            { error && <div>{ error }</div> }
+            {categories && categories.map((category) => {
+                return (
+                    <Link to={ `categories/${category.id}` } key={ category.id }>
+                        <button className="category" >
+                            <div className="icon"></div>
+                            <p className="tag">{ category.name }</p>
+                        </button>
+                    </Link>)  
+                }
+            )}
         </div>
      );
 }
