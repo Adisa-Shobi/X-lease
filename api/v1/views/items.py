@@ -8,7 +8,42 @@ from flask import abort, jsonify, make_response, request
 from models.item import Item
 from models.category import Category
 from models.user import User
+import requests
+import os
+from werkzeug.utils import secure_filename
 
+
+def store_image(image):
+    '''
+    Stores the device display image on imgur site and return link
+    '''
+    image.name = secure_filename(image.filename)
+    image.save(image.name)
+    img = image.name
+    url = "https://upload.gyazo.com/api/upload"
+    headers = {
+        "User-Agent": "X-lease.inc",
+        "Content-Disposition": 'form-data; name="imagedata"; filename="{}"'.format(img)
+    }
+    files = {
+        'imagedata': open("{}".format(img), 'rb')
+    }
+    payload = {
+        'access_token': 'byh7UVyssHhtbo0niATY8ccSceUdYXxncagn2gEjpO4',
+        'title': img
+    }
+    response = requests.post(url,
+                             headers=headers,
+                             data=payload,
+                             files=files
+    )
+    if os.path.exists(img):
+        os.remove(img)
+    if response.status_code == requests.codes.ok:
+        resp_data = response.json()
+        return resp_data['thumb_url']
+    else:
+        return None
 
 @app_views.route('/items', methods=['GET', 'POST'], strict_slashes=False)
 def get_items():
@@ -16,12 +51,20 @@ def get_items():
     Retrieves all items
     '''
     if request.method == 'POST':
-        data = requests.get_json()
-        if not data:
-            abort(404, description='Invalid JSON')
+        data = request.form.copy()
+        if not data or data == {}:
+            abort(404, description='Invalid form')
+        if 'image' not in request.files:
+            abort(404, description='No image file uploaded')
+        image = request.files['image']
+        link = store_image(image)
+        if not link:
+            abort(404, description='Invalid image')
+        data['img_src'] = link
         data_keys = data.keys()
         compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
-                           'description', 'category_id', 'owner_id']
+                           'description', 'category_id', 'owner_id', 'img_src',
+                           'quantity']
         if not set(compulsory_data).issubset(set(data_keys)):
             abort(404, description='insufficient data supplied')
         new_item = Item(**data)
@@ -47,9 +90,15 @@ def get_item(item_id=None):
 
     if request.method == 'PUT':
         read_only = ['id', 'created_at', 'updated_at']
-        data = request.get_json()
-        if not data:
+        data = request.form.copy()
+        if not data and not request.files:
             abort(404, description='Invalid JSON')
+        if 'image' in request.files:
+            image = request.files['image']
+            link = store_image(image)
+            if not link:
+                abort(404, description='Invalid image')
+            data['img_src']=link
         for info in data:
             if info not in read_only:
                 setattr(item, info, data[info])
@@ -72,13 +121,20 @@ def get_items_by_category(category_id=None):
     Retrieves all items under specified category
     '''
     if request.method == 'POST':
-        data = request.get_json()
+        data = request.form.copy()
         if not data:
             abort(404, description='Invalid JSON')
         data['category_id'] = category_id
+        if 'image' not in request.files:
+            abort(404, description='No image file uploaded')
+        image = request.files['image']
+        link = store_image(image)
+        if not link:
+            abort(404, description='Invalid image')
+        data['img_src'] = link
         data_keys = data.keys()
         compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
-                           'description', 'category_id', 'owner_id']
+                           'description', 'category_id', 'owner_id', 'img_src']
         if not set(compulsory_data).issubset(set(data_keys)):
             abort(404, description='insufficient data supplied')
         new_item = Item(**data)
@@ -122,10 +178,17 @@ def get_user_items(user_id):
     Retrieves items for specified user_id
     '''
     if request.method == 'POST':
-        data = request.get_json()
+        data = request.form.copy()
         if not data:
             abort(404, description='Invalid JSON')
         data['user_id'] = user_id
+        if 'image' not in request.files:
+            abort(404, description='No image file uploaded')
+        image = request.files['image']
+        link = store_image(image)
+        if not link:
+            abort(404, description='Invalid image')
+        data['img_src'] = link
         data_keys = data.keys()
         compulsory_data = ['owner_id', 'name', 'price', 'price_per_day',
                            'description', 'category_id', 'owner_id']

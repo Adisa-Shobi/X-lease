@@ -1,0 +1,242 @@
+-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
+--
+-- Host: localhost    Database: xlease_dev_db
+-- ------------------------------------------------------
+-- Server version	8.0.31-0ubuntu0.20.04.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categories` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES ('0f00518b-27f3-458d-bfcb-64b2c3025213','2022-12-19 10:30:35','2022-12-19 10:30:35','Mobile'),('43d1ec42-02c1-4c81-b6ea-fa5de532cf9e','2022-12-19 10:30:54','2022-12-19 10:30:54','Audio'),('6c6b73ed-d941-4d87-8b48-94a8bd6061e9','2022-12-19 10:31:15','2022-12-19 10:31:15','Fitness'),('6e7a5d95-24a7-438d-8cf5-428a04a23deb','2022-12-19 10:30:25','2022-12-19 10:30:25','Recording'),('93cf2ed6-19fc-4329-be4a-31e2d1281f7b','2022-12-19 10:31:06','2022-12-19 10:31:06','Wearablaes'),('9eb87897-2c8c-4c30-bd8e-d31320955648','2022-12-19 10:29:58','2022-12-19 10:29:58','Gaming'),('ccb327ab-8183-4f8e-bfa7-37cf9811873f','2022-12-19 10:30:12','2022-12-19 10:30:12','Filming'),('de8f5d34-bb0d-4f5d-b75a-0fb2686fdd7c','2022-12-19 10:31:52','2022-12-19 10:31:52','PA-System'),('fba4b9ba-0800-461e-82d2-f5a01977aca7','2022-12-19 10:30:48','2022-12-19 10:30:48','Computers');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cities`
+--
+
+DROP TABLE IF EXISTS `cities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cities` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `state_id` varchar(60) DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `state_id` (`state_id`),
+  CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cities`
+--
+
+LOCK TABLES `cities` WRITE;
+/*!40000 ALTER TABLE `cities` DISABLE KEYS */;
+INSERT INTO `cities` VALUES ('6a84d464-e77b-4105-a115-2cf2897fd19c','2022-12-19 10:27:48','2022-12-19 10:27:48','Jos','70235f5e-bdba-437f-8d4b-ddc1c40c1392',NULL,NULL),('b5e22aa5-b890-4907-b1ab-651ed067f48e','2022-12-19 10:29:26','2022-12-19 10:29:26','Ikoyi','89dd0531-2a2b-4d35-ac85-dbb0a1d74d12',NULL,NULL),('d9b0adc4-995b-4203-8cd9-849421218cd4','2022-12-19 10:29:11','2022-12-19 10:29:11','Ikeja','89dd0531-2a2b-4d35-ac85-dbb0a1d74d12',NULL,NULL);
+/*!40000 ALTER TABLE `cities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `countries`
+--
+
+DROP TABLE IF EXISTS `countries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `countries` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `countries`
+--
+
+LOCK TABLES `countries` WRITE;
+/*!40000 ALTER TABLE `countries` DISABLE KEYS */;
+INSERT INTO `countries` VALUES ('5fd3cbab-35d1-4281-be65-b454b4bd9094','2022-12-19 10:20:34','2022-12-19 10:20:34','Ghana'),('f2d60cd0-6a6e-44e4-9156-212aecb96635','2022-12-19 10:20:25','2022-12-19 10:20:25','Nigeria');
+/*!40000 ALTER TABLE `countries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `items` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `price` float NOT NULL,
+  `img_src` varchar(500) NOT NULL,
+  `price_per_day` float NOT NULL,
+  `description` text NOT NULL,
+  `category_id` varchar(60) DEFAULT NULL,
+  `owner_id` varchar(60) NOT NULL,
+  `leaser_id` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  KEY `owner_id` (`owner_id`),
+  KEY `leaser_id` (`leaser_id`),
+  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  CONSTRAINT `items_ibfk_2` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `items_ibfk_3` FOREIGN KEY (`leaser_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES ('32010cea-13c2-4847-ae14-556ac6a7c4f1','2023-01-02 21:06:14','2023-01-02 21:06:14','Macbook',1500,'https://unknown',20,'Macbook Air with M1 chip','fba4b9ba-0800-461e-82d2-f5a01977aca7','0ea8d387-5461-4bcc-a146-70235e066e15',NULL),('5edc16ad-11f1-4bd3-93ae-5c17bf5b3639','2022-12-19 11:14:25','2022-12-19 11:14:25','Sony ZV-1',120,'https://unknown',10,'Best Vlog Camera there is','ccb327ab-8183-4f8e-bfa7-37cf9811873f','0ea8d387-5461-4bcc-a146-70235e066e15',NULL),('71306793-1339-4726-8076-76fc1d499df6','2023-01-02 19:29:12','2023-01-02 21:00:59','Ipad',500,'https://unknown',15,'Mobile phone in good condition.','0f00518b-27f3-458d-bfcb-64b2c3025213','0ea8d387-5461-4bcc-a146-70235e066e15',NULL),('a650efeb-5ccc-4571-8b3b-c293ef9cd11b','2022-12-21 17:41:33','2022-12-21 17:41:33','Shure MV7 Mic',120,'https://unknown',5,'High definition recording mic','6e7a5d95-24a7-438d-8cf5-428a04a23deb','0ea8d387-5461-4bcc-a146-70235e066e15',NULL);
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `reviews` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `item_id` varchar(60) NOT NULL,
+  `user_id` varchar(60) NOT NULL,
+  `text` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `item_id` (`item_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
+  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reviews`
+--
+
+LOCK TABLES `reviews` WRITE;
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+INSERT INTO `reviews` VALUES ('18fa9414-2e44-4339-9016-14e345489209','2022-12-21 20:58:32','2022-12-21 20:59:21','5edc16ad-11f1-4bd3-93ae-5c17bf5b3639','0ea8d387-5461-4bcc-a146-70235e066e15','Really Good Camera'),('1f3bd558-92e4-4877-8624-d15de9601a88','2022-12-21 20:41:40','2022-12-21 20:41:40','a650efeb-5ccc-4571-8b3b-c293ef9cd11b','0ea8d387-5461-4bcc-a146-70235e066e15','This device was money well spent');
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `states`
+--
+
+DROP TABLE IF EXISTS `states`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `states` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `country_id` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_id` (`country_id`),
+  CONSTRAINT `states_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `states`
+--
+
+LOCK TABLES `states` WRITE;
+/*!40000 ALTER TABLE `states` DISABLE KEYS */;
+INSERT INTO `states` VALUES ('70235f5e-bdba-437f-8d4b-ddc1c40c1392','2022-12-19 10:22:48','2022-12-19 10:25:38','Plateau','f2d60cd0-6a6e-44e4-9156-212aecb96635'),('89dd0531-2a2b-4d35-ac85-dbb0a1d74d12','2022-12-19 10:23:24','2022-12-19 10:23:24','Lagos','f2d60cd0-6a6e-44e4-9156-212aecb96635'),('d591e137-8d25-4d29-9432-260e6aaeeb84','2022-12-19 10:24:07','2022-12-19 10:24:07','Abuja','f2d60cd0-6a6e-44e4-9156-212aecb96635');
+/*!40000 ALTER TABLE `states` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` varchar(60) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `username` varchar(5) NOT NULL,
+  `email` varchar(124) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('0ea8d387-5461-4bcc-a146-70235e066e15','2022-12-19 10:06:31','2022-12-19 10:06:31','Shobi','Adisa','SHO','shobiolaadisa@gmail.com','07089948484');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-01-06 17:00:05

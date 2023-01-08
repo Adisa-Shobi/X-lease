@@ -3,7 +3,7 @@
 body {
     margin: 0;
   }
-  
+
   /* Styling for main header div */
   header {
     border-bottom: 0.2px solid black;
@@ -15,17 +15,17 @@ body {
     justify-content: space-between;
     align-items: center;
   }
-  
+
   /* X-lease Logo styling */
-  header .logo {
+header .logo {
     display: inline;
-    content: url(../images/xlease_logo5.svg);
+    content: url(../images/logo.png);
     background-size: contain;
-    height: 90px;
-    width: 100px;
-    margin-left: 5px;
-  }
-  
+    height: 40px;
+    width: 180px;
+    margin-left: 15px;
+}
+
   /* Search bar styling */
   header .search {
     background-color: #E4E2E1;

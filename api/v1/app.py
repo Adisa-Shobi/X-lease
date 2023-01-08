@@ -2,7 +2,7 @@
 """ Flask Base Application """
 
 from flask import Flask, jsonify, make_response
-# from flask_cors import flask_cors
+from flask_cors import CORS
 from api.v1.views import app_views
 from models import storage
 from os import environ
@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
-# cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.teardown_appcontext
 def close_db(error):
@@ -33,5 +33,5 @@ if __name__ == "__main__":
     if not host:
         host = '0.0.0.0'
     if not port:
-        port = '5002'
+        port = '5001'
     app.run(host=host, port=port, threaded=True)

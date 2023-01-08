@@ -27,9 +27,8 @@ class Item(BaseModel, Base):
     __tablename__ = 'items'
     name = Column(String(50), nullable=False)
     price = Column(Float(), nullable=False)
-    # image = image_attachment('ItemImage')
+    img_src = Column(String(500), nullable=False)
     price_per_day = Column(Float(), nullable=False)
-    quantity = Column(Integer(), nullable=False)
     description = Column(Text(225), nullable=False)
     category_id = Column(String(60), ForeignKey('categories.id'))
     owner_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -38,5 +37,3 @@ class Item(BaseModel, Base):
     owner = relationship('User', foreign_keys='Item.owner_id', backref='items')
     leaser = relationship('User', foreign_keys='Item.leaser_id',
                           backref='leased')
-
-
