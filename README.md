@@ -1,5 +1,5 @@
 # X-lease
-![Screenshot](/web_static/images/Screeenshot.png)
+![Screenshot](./web_static/images/Screeenshot.png)
 ## Description
 ### About
 X-lease is an marketplace focused on allowing users to lease devices. It achieves this by serving as a broker between users who want to put up their devices for rent and users who wish to lease them. All devices including but not limited to:
