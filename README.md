@@ -28,8 +28,8 @@ gurnicorn --bind 127.0.0.1:50001 api.v1.app:app
 /api/states
 ```
 Mehtods:
-	- GET - Returns the list of available states
-	- POST - Creates a state object and return the created state
+    - GET - Returns the list of available states
+    - POST - Creates a state object and return the created state
 ```
 /api/states/<state_id>
 ```
