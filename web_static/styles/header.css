@@ -1,11 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap");
 /* Styling for footer section of Landing Page */
 body {
     margin: 0;
 }
 
-/* Styling for main header div */
+  /* Styling for main header div */
 header {
-    border-bottom: 0.2px solid black;
+    border-bottom: 0.2px solid rgb(228, 223, 223);
     background: white;
     width: 100%;
     height: 70px;
@@ -15,7 +16,7 @@ header {
     align-items: center;
 }
 
-/* X-lease Logo styling */
+  /* X-lease Logo styling */
 header .logo {
     display: inline;
     content: url(../images/logo.png);
@@ -24,6 +25,7 @@ header .logo {
     width: 180px;
     margin-left: 15px;
 }
+
 
 /* Search bar styling */
 header .search {
@@ -61,7 +63,6 @@ header .search-logo {
     height: 20px;
     width: 20px;
     margin-right: 5px;
-    
 }
 
 /* Styling for link section of header */
@@ -72,11 +73,20 @@ header .links {
     margin-right: 20px;
     align-items: center;
 }
-
+  
 /* Styling for "Lease your device" button */
 header .lease-button {
     border: none;
-    padding: 15px;
+    height: 40px;
+    background-color: #E4E2E1;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-right: 10px;
+    text-align: center;
+    padding: 10px;
+    color: black;
+    /*    font-weight: bold; */
+    opacity: 90%;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -101,7 +111,7 @@ header .profile {
     padding: 0px 15px;
 }
 
-/* Styling for input field of search bar */
+/* Styling for input field  of search bar */
 .search input:focus {
     outline: none; /* Deleted focus outline of input field */
 }
